@@ -57,7 +57,22 @@ async function main() {
           letterInformation[letterKey].absentAtIndecies.push(position);
           break;
         case "b": // Black: letter is not in the word
-          letterInformation[letterKey].absent = true;
+          // Only mark as absent if ALL instances of this letter in the guess are black
+          const allInstancesBlack = currentGuess
+            .split("")
+            .every((letter, index) => {
+              if (letter === letterKey) {
+                return feedback.value[index] === "b";
+              }
+              return true;
+            });
+
+          if (allInstancesBlack) {
+            letterInformation[letterKey].absent = true;
+          } else {
+            // If not all instances are black, just mark this position as forbidden
+            letterInformation[letterKey].absentAtIndecies.push(position);
+          }
           break;
       }
     });

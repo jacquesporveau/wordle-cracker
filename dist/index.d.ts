@@ -1,3 +1,2 @@
-import { answers } from './answers.js';
-export { answers };
+export {};
 //# sourceMappingURL=index.d.ts.map
