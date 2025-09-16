@@ -87,7 +87,7 @@ async function main() {
     );
 
     // Find the next best guess that satisfies all constraints
-    currentGuess = answers.find((answer) => {
+    const possibleAnswers = answers.filter((answer) => {
       // Check green letters are in correct positions
       const hasGreenLettersInCorrectPositions = letters.every((letter) => {
         const correctPosition = letterInformation[letter].presentAtIndex;
@@ -118,8 +118,20 @@ async function main() {
         includesAllPresentLetters &&
         excludesAllAbsentLetters
       );
-    })!;
+    });
 
+    if (possibleAnswers.length === 1) {
+      console.log(`The answer is "${possibleAnswers[0]}"`);
+      console.log(`I solved it in ${guessNumber} guesses!`);
+      return;
+    }
+
+    if (possibleAnswers.length === 0) {
+      console.log("❌ No valid answers found. Check your feedback input.");
+      return;
+    }
+
+    currentGuess = possibleAnswers[0]!;
     console.log(`Your next guess is "${currentGuess}"`);
   }
 }
