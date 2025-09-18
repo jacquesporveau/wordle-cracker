@@ -1,4 +1,5 @@
 import { answers } from "./answers.js";
+import { GUESS_MAP } from "./constants.js";
 import { letters } from "./letters.js";
 import {
   type Letter,
@@ -41,13 +42,13 @@ export class WordleSolver {
       const letterKey = guess[position] as Letter;
 
       switch (feedbackLetter as FeedbackLetter) {
-        case "g": // Green: letter is correct and in the right position
+        case GUESS_MAP.GREEN: // Green: letter is correct and in the right position
           this.letterInformation[letterKey].presentAtIndex = position;
           break;
-        case "y": // Yellow: letter is correct but in the wrong position
+        case GUESS_MAP.YELLOW: // Yellow: letter is correct but in the wrong position
           this.letterInformation[letterKey].absentAtIndecies.push(position);
           break;
-        case "b": // Black: letter is not in the word
+        case GUESS_MAP.BLANK: // Black: letter is not in the word
           this.processBlackLetter(guess, feedback, letterKey, position);
           break;
       }
