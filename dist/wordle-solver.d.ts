@@ -5,7 +5,7 @@ export declare class WordleSolver {
     private isLetterPresent;
     private isLetterAbsent;
     private processFeedback;
-    private processBlackLetter;
+    private processBlankLetter;
     private getValidAnswers;
     getNextGuess({ guess, feedback, }: {
         guess: string;

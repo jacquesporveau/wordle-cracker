@@ -34,25 +34,25 @@ export class WordleSolver {
                 case GUESS_MAP.YELLOW: // Yellow: letter is correct but in the wrong position
                     this.letterInformation[letterKey].absentAtIndecies.push(position);
                     break;
-                case GUESS_MAP.BLANK: // Black: letter is not in the word
-                    this.processBlackLetter({ guess, feedback, letterKey, position });
+                case GUESS_MAP.BLANK: // Blank: letter is not in the word
+                    this.processBlankLetter({ guess, feedback, letterKey, position });
                     break;
             }
         });
     }
-    processBlackLetter({ guess, feedback, letterKey, position, }) {
-        // Only mark as absent if ALL instances of this letter in the guess are black
-        const allInstancesBlack = guess.split("").every((letter, index) => {
+    processBlankLetter({ guess, feedback, letterKey, position, }) {
+        // Only mark as absent if ALL instances of this letter in the guess are blank
+        const allInstancesBlank = guess.split("").every((letter, index) => {
             if (letter === letterKey) {
                 return feedback[index] === "b";
             }
             return true;
         });
-        if (allInstancesBlack) {
+        if (allInstancesBlank) {
             this.letterInformation[letterKey].absent = true;
         }
         else {
-            // If not all instances are black, just mark this position as forbidden
+            // If not all instances are blank, just mark this position as forbidden
             this.letterInformation[letterKey].absentAtIndecies.push(position);
         }
     }

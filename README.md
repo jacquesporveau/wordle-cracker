@@ -13,7 +13,7 @@ Then just follow the prompts and enter your feedback:
 
 - `g` = green (you nailed it)
 - `y` = yellow (close but no cigar)
-- `b` = black (that letter is trash)
+- `b` = blank (that letter is trash)
 
 The bot will suggest "CRANE" first because it's a smart cookie, then keep guessing until you either solve it or run out of tries (which shouldn't happen because this thing is pretty good).
 
