@@ -7,7 +7,7 @@ export class WordleGame {
         this.solver = new WordleSolver();
     }
     async play() {
-        let currentGuess = "raise";
+        let currentGuess = "crane";
         for (let guessNumber = 1; guessNumber <= 6; guessNumber++) {
             console.log(`Your guess #${guessNumber} is "${currentGuess}"`);
             const feedback = (await prompts({

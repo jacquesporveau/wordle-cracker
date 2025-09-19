@@ -47,7 +47,7 @@ export class WordleTester {
 
   private solveWord(targetWord: string): number {
     this.solver.reset();
-    let currentGuess = "raise";
+    let currentGuess = "crane";
 
     for (let guessNumber = 1; guessNumber <= 6; guessNumber++) {
       const feedback = WordleSimulator.getFeedback({
