@@ -24,7 +24,7 @@ export class WordleSolver {
     isLetterAbsent(letter) {
         return this.letterInformation[letter].absent;
     }
-    processFeedback(guess, feedback) {
+    processFeedback({ guess, feedback, }) {
         feedback.split("").forEach((feedbackLetter, position) => {
             const letterKey = guess[position];
             switch (feedbackLetter) {
@@ -35,12 +35,12 @@ export class WordleSolver {
                     this.letterInformation[letterKey].absentAtIndecies.push(position);
                     break;
                 case GUESS_MAP.BLANK: // Black: letter is not in the word
-                    this.processBlackLetter(guess, feedback, letterKey, position);
+                    this.processBlackLetter({ guess, feedback, letterKey, position });
                     break;
             }
         });
     }
-    processBlackLetter(guess, feedback, letterKey, position) {
+    processBlackLetter({ guess, feedback, letterKey, position, }) {
         // Only mark as absent if ALL instances of this letter in the guess are black
         const allInstancesBlack = guess.split("").every((letter, index) => {
             if (letter === letterKey) {
@@ -82,16 +82,16 @@ export class WordleSolver {
                 excludesAllAbsentLetters);
         });
     }
-    getNextGuess(guess, feedback) {
-        this.processFeedback(guess, feedback);
+    getNextGuess({ guess, feedback, }) {
+        this.processFeedback({ guess, feedback });
         const validAnswers = this.getValidAnswers();
         if (validAnswers.length === 0) {
             return undefined; // No valid answers found
         }
         return validAnswers[0];
     }
-    isSolved(guess, feedback) {
-        this.processFeedback(guess, feedback);
+    isSolved({ guess, feedback, }) {
+        this.processFeedback({ guess, feedback });
         const validAnswers = this.getValidAnswers();
         return validAnswers.length === 1 && validAnswers[0] === guess;
     }

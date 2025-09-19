@@ -1,8 +1,15 @@
 import { GUESS_MAP } from "./constants.js";
 
 export class WordleSimulator {
-  static getFeedback(guess: string, target: string): string {
-    const feedback = new Array(5).fill("b");
+  static getFeedback({
+    guess,
+    target,
+  }: {
+    guess: string;
+    target: string;
+  }): string {
+    const feedback = new Array(5).fill(GUESS_MAP.BLANK);
+
     const targetLetters = target.split("");
     const guessLetters = guess.split("");
 

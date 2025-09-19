@@ -7,8 +7,14 @@ export declare class WordleSolver {
     private processFeedback;
     private processBlackLetter;
     private getValidAnswers;
-    getNextGuess(guess: string, feedback: string): string | undefined;
-    isSolved(guess: string, feedback: string): boolean;
+    getNextGuess({ guess, feedback, }: {
+        guess: string;
+        feedback: string;
+    }): string | undefined;
+    isSolved({ guess, feedback, }: {
+        guess: string;
+        feedback: string;
+    }): boolean;
     reset(): void;
 }
 //# sourceMappingURL=wordle-solver.d.ts.map

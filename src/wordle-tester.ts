@@ -42,7 +42,7 @@ export class WordleTester {
       }
     }
 
-    this.displayResults(results, failed);
+    this.displayResults({ results, failed });
   }
 
   private solveWord(targetWord: string): number {
@@ -50,13 +50,19 @@ export class WordleTester {
     let currentGuess = "raise";
 
     for (let guessNumber = 1; guessNumber <= 6; guessNumber++) {
-      const feedback = WordleSimulator.getFeedback(currentGuess, targetWord);
+      const feedback = WordleSimulator.getFeedback({
+        guess: currentGuess,
+        target: targetWord,
+      });
 
-      if (this.solver.isSolved(currentGuess, feedback)) {
+      if (this.solver.isSolved({ guess: currentGuess, feedback })) {
         return guessNumber;
       }
 
-      const nextGuess = this.solver.getNextGuess(currentGuess, feedback);
+      const nextGuess = this.solver.getNextGuess({
+        guess: currentGuess,
+        feedback,
+      });
 
       if (!nextGuess) {
         return 7; // Failed to solve
@@ -68,7 +74,13 @@ export class WordleTester {
     return 7; // Failed to solve
   }
 
-  private displayResults(results: number[], failed: number): void {
+  private displayResults({
+    results,
+    failed,
+  }: {
+    results: number[];
+    failed: number;
+  }): void {
     const average =
       results.reduce((sum, guesses) => sum + guesses, 0) / results.length;
     const successRate = ((results.length - failed) / results.length) * 100;

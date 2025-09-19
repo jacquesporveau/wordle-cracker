@@ -21,13 +21,18 @@ export class WordleGame {
         message: `What is the feedback for guess #${guessNumber}?`,
       })) as FeedbackResponse;
 
-      if (this.solver.isSolved(currentGuess, feedback.value)) {
+      if (
+        this.solver.isSolved({ guess: currentGuess, feedback: feedback.value })
+      ) {
         console.log(`The answer is "${currentGuess}"`);
         console.log(`I solved it in ${guessNumber} guesses!`);
         return;
       }
 
-      const nextGuess = this.solver.getNextGuess(currentGuess, feedback.value);
+      const nextGuess = this.solver.getNextGuess({
+        guess: currentGuess,
+        feedback: feedback.value,
+      });
 
       if (!nextGuess) {
         console.log("❌ No valid answers found. Check your feedback input.");

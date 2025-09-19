@@ -4,7 +4,6 @@ import { letters } from "./letters.js";
 import {
   type Letter,
   type LetterInformation,
-  type LetterInformationState,
   type FeedbackLetter,
 } from "./types.js";
 
@@ -37,7 +36,13 @@ export class WordleSolver {
     return this.letterInformation[letter].absent;
   }
 
-  private processFeedback(guess: string, feedback: string): void {
+  private processFeedback({
+    guess,
+    feedback,
+  }: {
+    guess: string;
+    feedback: string;
+  }): void {
     feedback.split("").forEach((feedbackLetter, position) => {
       const letterKey = guess[position] as Letter;
 
@@ -49,18 +54,23 @@ export class WordleSolver {
           this.letterInformation[letterKey].absentAtIndecies.push(position);
           break;
         case GUESS_MAP.BLANK: // Black: letter is not in the word
-          this.processBlackLetter(guess, feedback, letterKey, position);
+          this.processBlackLetter({ guess, feedback, letterKey, position });
           break;
       }
     });
   }
 
-  private processBlackLetter(
-    guess: string,
-    feedback: string,
-    letterKey: Letter,
-    position: number
-  ): void {
+  private processBlackLetter({
+    guess,
+    feedback,
+    letterKey,
+    position,
+  }: {
+    guess: string;
+    feedback: string;
+    letterKey: Letter;
+    position: number;
+  }): void {
     // Only mark as absent if ALL instances of this letter in the guess are black
     const allInstancesBlack = guess.split("").every((letter, index) => {
       if (letter === letterKey) {
@@ -122,8 +132,14 @@ export class WordleSolver {
     });
   }
 
-  public getNextGuess(guess: string, feedback: string): string | undefined {
-    this.processFeedback(guess, feedback);
+  public getNextGuess({
+    guess,
+    feedback,
+  }: {
+    guess: string;
+    feedback: string;
+  }): string | undefined {
+    this.processFeedback({ guess, feedback });
     const validAnswers = this.getValidAnswers();
 
     if (validAnswers.length === 0) {
@@ -133,8 +149,14 @@ export class WordleSolver {
     return validAnswers[0];
   }
 
-  public isSolved(guess: string, feedback: string): boolean {
-    this.processFeedback(guess, feedback);
+  public isSolved({
+    guess,
+    feedback,
+  }: {
+    guess: string;
+    feedback: string;
+  }): boolean {
+    this.processFeedback({ guess, feedback });
     const validAnswers = this.getValidAnswers();
     return validAnswers.length === 1 && validAnswers[0] === guess;
   }
